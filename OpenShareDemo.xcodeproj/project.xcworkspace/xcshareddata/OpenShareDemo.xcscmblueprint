@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "BA94D5641ED315264D9ED3CBDED1E364BAB84E44",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "BA94D5641ED315264D9ED3CBDED1E364BAB84E44" : 0,
+    "78657FD740A36FD7D0A79ED321BB432F67A9C67C" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3D2FC855-2CD2-42A5-B8CC-BB0453FE3EA5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "BA94D5641ED315264D9ED3CBDED1E364BAB84E44" : "SudiyiClient\/",
+    "78657FD740A36FD7D0A79ED321BB432F67A9C67C" : "SudiyiClient\/Vendor\/SourceCode\/TCKit\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "OpenShareDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Vendor\/SourceCode\/OpenShareDemo\/OpenShareDemo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/dake\/TCKit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "78657FD740A36FD7D0A79ED321BB432F67A9C67C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/gerrit.sudiyi.cn:29418\/apps\/iOS\/SudiyiClient",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BA94D5641ED315264D9ED3CBDED1E364BAB84E44"
+    }
+  ]
+}

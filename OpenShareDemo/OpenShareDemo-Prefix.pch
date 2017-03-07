@@ -1,0 +1,18 @@
+//
+//  OpenShareDemo-Prefix.pch
+//  OpenShareDemo
+//
+//  Created by jia on 16/5/30.
+//  Copyright © 2016年 Jia. All rights reserved.
+//
+
+#ifndef OpenShareDemo_Prefix_pch
+#define OpenShareDemo_Prefix_pch
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "TCDebug.h"
+#import "TCKit.h"
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* OpenShareDemo_Prefix_pch */

@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  OpenShare
+
+  Created by jia on 16/5/12.
+  Copyright © 2016年 Jia. All rights reserved.
+*/
+
+"os.platform.qq" = "QQ好友";
+"os.platform.qzone" = "QQ空间";
+"os.platform.wxsession" = "微信好友";
+"os.platform.wxtimeline" = "朋友圈";
+"os.platform.sina" = "新浪微博";
+"os.platform.email" = "邮件";
+"os.platform.sms" = "短信";
+"os.platform.copyurl" = "复制链接";
+"os.platform.facebook" = "Facebook";
+"os.platform.twitter" = "Twitter";
+"copyurl.success" = "复制成功";
