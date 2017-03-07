@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  OpenShare
+
+  Created by jia on 16/5/12.
+  Copyright © 2016年 Jia. All rights reserved.
+*/
+
+"os.platform.qq" = "QQ Friends";
+"os.platform.qzone" = "QQ Zone";
+"os.platform.wxsession" = "Wechat Session";
+"os.platform.wxtimeline" = "Wechat TimeLine";
+"os.platform.sina" = "Sina Weibo";
+"os.platform.email" = "Email";
+"os.platform.sms" = "SMS";
+"os.platform.copyurl" = "Copy";
+"os.platform.facebook" = "Facebook";
+"os.platform.twitter" = "Twitter";
+"copyurl.success" = "Copy Success";
+"public.button.cancel" = "Cancel";

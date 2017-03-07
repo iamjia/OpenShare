@@ -10,12 +10,21 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		nzsGgwBIFGAkrigrb56+55QrmC4=
+		T07qdmI065TESfZ4ESKVtLCnCJU=
 		</data>
 		<key>OpenShareResources.bundle/Info.plist</key>
 		<data>
 		neMtdMxMWgokt0Vuguh7ETXHXXs=
 		</data>
+		<key>OpenShareResources.bundle/en.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			To+oKLPRdoKCnekW9AFDAtYgnO0=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
 		<key>OpenShareResources.bundle/os_copy_url.png</key>
 		<data>
 		8iRd3dBI67amA9mbEiqNhfxRRiE=
@@ -128,7 +137,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			zhBpvb5XcCvvq4KrdY4ctBUCi5w=
+			yIa96QiHSNYghpCIKojxLEPhhKg=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -213,6 +222,19 @@
 			<data>
 			gZE9a03p1iXHW5Bt6Vtc9jA2x0wWDVBFXIagnNgFB4Y=
 			</data>
+		</dict>
+		<key>OpenShareResources.bundle/en.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			To+oKLPRdoKCnekW9AFDAtYgnO0=
+			</data>
+			<key>hash2</key>
+			<data>
+			UCOZXSRyhn2nqJg68eiDopgqIZJWxaJ0YCCpL1E//ms=
+			</data>
+			<key>optional</key>
+			<true/>
 		</dict>
 		<key>OpenShareResources.bundle/os_copy_url.png</key>
 		<dict>
@@ -515,11 +537,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			zhBpvb5XcCvvq4KrdY4ctBUCi5w=
+			yIa96QiHSNYghpCIKojxLEPhhKg=
 			</data>
 			<key>hash2</key>
 			<data>
-			CfwklGcRuCYDd6b7/nH4KWciXBSWmNoRFzW/oBEOqWY=
+			T+XtAzm5bd4cBlIrcUj1MQ6iJIBWKlU7qQ6n6zQEWho=
 			</data>
 			<key>optional</key>
 			<true/>

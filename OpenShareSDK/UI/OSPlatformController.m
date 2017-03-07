@@ -148,7 +148,9 @@ static CGFloat const kAnimDuration = 0.2f;
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _cancelBtn.backgroundColor = [UIColor whiteColor];
     [_cancelBtn setTitleColor:RGBHex(0x333333) forState:UIControlStateNormal];
-    [_cancelBtn setTitle:NSLocalizedString(@"public.button.cancel", nil) forState:UIControlStateNormal];
+
+    NSString *cancelTitle = NSLocalizedStringFromTableInBundle(@"public.button.cancel", nil, self.openShareBundle, nil);
+    [_cancelBtn setTitle:cancelTitle forState:UIControlStateNormal];
     _cancelBtn.frame = CGRectMake(0.0f, CGRectGetMaxY(separatorLine.frame), self.view.bounds.size.width, cancelBtnHeight);
     _cancelBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [_cancelBtn addTarget:self action:@selector(tapDismiss) forControlEvents:UIControlEventTouchUpInside];
