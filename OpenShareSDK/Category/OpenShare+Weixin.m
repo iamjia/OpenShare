@@ -70,6 +70,8 @@ static OSWXParameter *s_wxParam = nil;
 
 + (NSURL *)wxurlWithMessage:(OSMessage *)msg flag:(NSInteger)flag
 {
+    s_wxParam = nil;
+    
     OSDataItem *data = msg.dataItem;
     data.platformCode = flag;
     

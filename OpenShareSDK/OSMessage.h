@@ -69,8 +69,8 @@ typedef NS_ENUM(NSInteger, OSMultimediaType) {
 @property (nonatomic, copy) NSString *sinaContent;
 
 // 微信
-@property (nonatomic, strong) NSURL *mediaDataUrl;
-@property (nonatomic, strong) NSData *wxFileData; // 微信分享gif/文件
+@property (nonatomic, strong) NSURL *mediaDataUrl; // 视频
+@property (nonatomic, strong) NSData *wxFileData; // 微信分享gif、文件
 @property (nonatomic, copy) NSString *wxExtInfo; // TODO: 待查意义
 @property (nonatomic, copy) NSString *wxFileExt; // TODO: 待查意义
 
@@ -86,6 +86,9 @@ typedef NS_ENUM(NSInteger, OSMultimediaType) {
 
 // twitter
 @property (nonatomic, copy) NSString *twitterContent;
+
+// copy
+@property (nonatomic, copy) NSString *copyableContent;
 
 // 单个数据
 - (void)setValue:(id)value forKey:(NSString *)key forPlatform:(OSPlatformCode)platformCode;

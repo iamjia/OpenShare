@@ -61,7 +61,6 @@
 		08EA8C7B1E6DA6A300508506 /* os_fb_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08EA8C771E6DA6A300508506 /* os_fb_icon@3x.png */; };
 		08EA8C7C1E6DA6A300508506 /* os_tw_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08EA8C781E6DA6A300508506 /* os_tw_icon@2x.png */; };
 		08EA8C7D1E6DA6A300508506 /* os_tw_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08EA8C791E6DA6A300508506 /* os_tw_icon@3x.png */; };
-		08EA8D4C1E6E86CA00508506 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 08EA8C951E6E86CA00508506 /* .gitignore */; };
 		08EA8D4D1E6E86CA00508506 /* NSArray+TCUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8C991E6E86CA00508506 /* NSArray+TCUtilities.m */; };
 		08EA8D4E1E6E86CA00508506 /* NSDate+TCUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8C9B1E6E86CA00508506 /* NSDate+TCUtilities.m */; };
 		08EA8D4F1E6E86CA00508506 /* NSObject+TCUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8C9D1E6E86CA00508506 /* NSObject+TCUtilities.m */; };
@@ -134,7 +133,7 @@
 		08EA8D921E6E86CB00508506 /* AnimatedGIFImageSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8D471E6E86CA00508506 /* AnimatedGIFImageSerialization.m */; };
 		08EA8D931E6E86CB00508506 /* UIImage+CGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8D491E6E86CA00508506 /* UIImage+CGImage.m */; };
 		08EA8D941E6E86CB00508506 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8D4B1E6E86CA00508506 /* UIImage+Resize.m */; };
-		08EA8D971E6E873E00508506 /* UIImage+SDYHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8D961E6E873E00508506 /* UIImage+SDYHelper.m */; };
+		B7ED48F31EA214BD0032FD9E /* UIImage+SDYHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8D961E6E873E00508506 /* UIImage+SDYHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -266,7 +265,6 @@
 		08EA8C771E6DA6A300508506 /* os_fb_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "os_fb_icon@3x.png"; sourceTree = "<group>"; };
 		08EA8C781E6DA6A300508506 /* os_tw_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "os_tw_icon@2x.png"; sourceTree = "<group>"; };
 		08EA8C791E6DA6A300508506 /* os_tw_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "os_tw_icon@3x.png"; sourceTree = "<group>"; };
-		08EA8C951E6E86CA00508506 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		08EA8C981E6E86CA00508506 /* NSArray+TCUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+TCUtilities.h"; sourceTree = "<group>"; };
 		08EA8C991E6E86CA00508506 /* NSArray+TCUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+TCUtilities.m"; sourceTree = "<group>"; };
 		08EA8C9A1E6E86CA00508506 /* NSDate+TCUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TCUtilities.h"; sourceTree = "<group>"; };
@@ -622,7 +620,6 @@
 		08EA8C941E6E86CA00508506 /* TCKit */ = {
 			isa = PBXGroup;
 			children = (
-				08EA8C951E6E86CA00508506 /* .gitignore */,
 				08EA8C961E6E86CA00508506 /* BaseUtlity */,
 				08EA8CB01E6E86CA00508506 /* DebugUtility */,
 				08EA8CB51E6E86CA00508506 /* Helper */,
@@ -1058,8 +1055,7 @@
 					};
 					088CABE21CFBDD75000CEFCD = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = UZ37QVJJMQ;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					088CAC121CFBDD94000CEFCD = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1090,7 +1086,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08EA8D4C1E6E86CA00508506 /* .gitignore in Resources */,
 				08D7A6271D9CC35500F8457B /* SVProgressHUD.bundle in Resources */,
 				08851C221CFC327600F2F1B8 /* OpenShareResources.bundle in Resources */,
 				088CABF31CFBDD75000CEFCD /* Assets.xcassets in Resources */,
@@ -1147,7 +1142,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "BUILD_BUNDLE_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.bundle\nTARGET_DIR=${SRCROOT}/build/${PRODUCT_NAME}.bundle\n\nrm -rf \"$TARGET_DIR\"\ncp -rf \"$BUILD_BUNDLE_DIR\" \"$TARGET_DIR\"";
+			shellScript = "BUILD_BUNDLE_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.bundle\nTARGET_DIR=${SRCROOT}/build\nTARGET_PATH=${SRCROOT}/build/${PRODUCT_NAME}.bundle\n\nrm -rf \"$TARGET_PATH\"\n\nif [ ! -d \"$TARGET_DIR\" ]; then\nmkdir \"$TARGET_DIR\"\nfi\n\ncp -rf \"$BUILD_BUNDLE_DIR\" \"$TARGET_PATH\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1160,6 +1155,7 @@
 				08EA8C711E6D615300508506 /* OpenShare+Twitter.m in Sources */,
 				08851A361CFC300B00F2F1B8 /* OpenShareConfig.m in Sources */,
 				08851A3C1CFC300B00F2F1B8 /* OSPlatformController.m in Sources */,
+				B7ED48F31EA214BD0032FD9E /* UIImage+SDYHelper.m in Sources */,
 				08851A3B1CFC300B00F2F1B8 /* OSWXParameter.m in Sources */,
 				08EA8C751E6DA29600508506 /* OpenShareFacebookParam.m in Sources */,
 				08851A301CFC300B00F2F1B8 /* OpenShare+QQ.m in Sources */,
@@ -1249,7 +1245,6 @@
 				08EA8D541E6E86CA00508506 /* TCProxy.m in Sources */,
 				088CABE81CFBDD75000CEFCD /* main.m in Sources */,
 				08EA8D6E1E6E86CB00508506 /* TCBaseResponseValidator.m in Sources */,
-				08EA8D971E6E873E00508506 /* UIImage+SDYHelper.m in Sources */,
 				08EA8D531E6E86CA00508506 /* NSString+TCCypher.m in Sources */,
 				08EA8D661E6E86CB00508506 /* AFURLResponseSerialization.m in Sources */,
 				08EA8D8B1E6E86CB00508506 /* UILabel+TCHelper.m in Sources */,
@@ -1418,7 +1413,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = UZ37QVJJMQ;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "OpenShareDemo/OpenShareDemo-Prefix.pch";
 				INFOPLIST_FILE = OpenShareDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1437,7 +1432,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = UZ37QVJJMQ;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "OpenShareDemo/OpenShareDemo-Prefix.pch";
 				INFOPLIST_FILE = OpenShareDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1533,7 +1528,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = UZ37QVJJMQ;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "OpenShareDemo/OpenShareDemo-Prefix.pch";
 				INFOPLIST_FILE = OpenShareDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

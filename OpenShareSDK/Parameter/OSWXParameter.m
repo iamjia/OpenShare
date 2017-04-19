@@ -31,7 +31,7 @@
 {
     NSError *error = nil;
     if (0 != _result) {
-        NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey: @"分享失败",
+        NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey: @"share failed",
                                    NSLocalizedDescriptionKey: [NSString stringWithFormat:@"%zd", _result]};
         error = [NSError errorWithDomain:kOSErrorDomainWeixin
                                     code:_result
@@ -39,5 +39,6 @@
     }
     return error;
 }
+
 
 @end

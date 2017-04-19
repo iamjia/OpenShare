@@ -72,6 +72,8 @@ static OSQQParameter *s_qqParam = nil;
 
 + (NSURL *)urlWithMessage:(OSMessage *)msg flag:(NSInteger)flag
 {
+    s_qqParam = nil;
+    
     OSDataItem *data = msg.dataItem;
     data.platformCode = flag;
     

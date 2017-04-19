@@ -188,9 +188,13 @@ static NSString *const kDefaultData = @"defaultData";
 - (NSData *)thumbnailData
 {
     NSData *thumbnailData = [self platformValueForProperty:NSStringFromSelector(_cmd)];
-    if (nil == thumbnailData && nil != self.imageData) {
-        
-        NSUInteger bytes = 32 * 1024; // 默认32kb
+ 
+    if (nil == thumbnailData) {
+        thumbnailData = self.imageData;
+    }
+    // 如果存在imagedata，那么忽略掉thumbnaildata，采用imagedata来裁剪
+    if (nil != thumbnailData) {
+        NSUInteger bytes = 40 * 1024; // 默认40kb
         switch (_platformCode) {
             case kOSPlatformQQ:
             case kOSPlatformQQZone: {
@@ -201,12 +205,13 @@ static NSString *const kDefaultData = @"defaultData";
                 break;
         }
         
-        UIImage *image = [UIImage imageWithData:self.imageData];
-        thumbnailData = [image dataWithMaxCompressSizeBytes:bytes];
+        @autoreleasepool {
+            UIImage *image = [UIImage imageWithData:thumbnailData];
+            thumbnailData = [image dataWithMaxCompressSizeBytes:bytes];
+        }
     }
     
-    // 压缩之后依然无法达到要求的，默认采用appicon作为缩略图
-    return thumbnailData.length > 0 ? thumbnailData : UIImageJPEGRepresentation([UIImage imageNamed:@"AppIcon40x40@2x.png"], 0.8f);
+    return thumbnailData;
 }
 
 - (NSString *)imageUrl
@@ -251,6 +256,13 @@ static NSString *const kDefaultData = @"defaultData";
     return _twitterContent;
 }
 
+- (NSString *)copyableContent
+{
+    if (nil == _copyableContent) {
+        _copyableContent = self.customedContent;
+    }
+    return _copyableContent;
+}
 
 - (NSString *)customedContent
 {

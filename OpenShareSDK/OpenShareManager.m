@@ -13,14 +13,17 @@
 #import "OSPlatformController.h"
 #import "OSResponse.h"
 #import "SVProgressHUD.h"
+#import "UIImage+SDYHelper.h"
 
 @interface OpenShareManager () <OSPlatformControllerDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 {
     @private
     OSPlatformController *_platformCtrler;
     __weak id _shareFinishObsvr;
+    
 }
 
+@property (nonatomic, assign) OSPlatformCode platform;
 @property (nonatomic, strong) OSMessage *message;
 @property (nonatomic, copy) OSShareCompletionHandle shareCompletionHandle;
 
@@ -69,7 +72,7 @@
     _platformCtrler.delegate = self;
     _platformCtrler.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    if (nil != _message.dataItem.imageUrl) {
+    if (nil != _message.dataItem.imageUrl || nil != _message.dataItem.thumbnailUrl) {
         [self downloadImage];
     } else {
         [self showPlatformController];
@@ -86,26 +89,37 @@
     
     NSMutableArray *arry = codes.mutableCopy;;
     
-    if (!OpenShare.isQQInstalled) {
-        [arry removeObject:@(kOSPlatformQQ)];
-        [arry removeObject:@(kOSPlatformQQZone)];
+    NSNumber *qq = @(kOSPlatformQQ);
+    NSNumber *qqzone = @(kOSPlatformQQZone);
+    if (([arry containsObject:qq] || [arry containsObject:qqzone]) && !OpenShare.isQQInstalled) {
+        [arry removeObject:qq];
+        [arry removeObject:qqzone];
     }
     
-    if (!OpenShare.isWeixinInstalled) {
-        [arry removeObject:@(kOSPlatformWXSession)];
-        [arry removeObject:@(kOSPlatformWXTimeLine)];
+    NSNumber *wxs = @(kOSPlatformWXSession);
+    NSNumber *wxt = @(kOSPlatformWXTimeLine);
+    if (([arry containsObject:wxs] || [arry containsObject:wxt]) && !OpenShare.isWeixinInstalled) {
+        [arry removeObject:wxs];
+        [arry removeObject:wxt];
     }
     
-    if (!OpenShare.isSinaWeiboInstalled) {
-        [arry removeObject:@(kOSPlatformSina)];
+    NSNumber *sinawb = @(kOSPlatformSina);
+    if ([arry containsObject:wxs] && !OpenShare.isSinaWeiboInstalled) {
+        [arry removeObject:sinawb];
     }
     
-    if (!OpenShare.isFacebookInstalled) {
-        [arry removeObject:@(kOSPlatformFacebook)];
+    NSNumber *fb = @(kOSPlatformFacebook);
+    if ([arry containsObject:fb] && !OpenShare.isFacebookInstalled) {
+        [arry removeObject:fb];
     }
     
-    if (!OpenShare.isTwitterInstalled) {
-        [arry removeObject:@(kOSPlatformTwitter)];
+    NSNumber *tw = @(kOSPlatformTwitter);
+    if ([arry containsObject:tw] && !OpenShare.isTwitterInstalled) {
+        [arry removeObject:tw];
+    }
+    
+    if (!MFMessageComposeViewController.canSendText) {
+        [arry removeObject:@(kOSPlatformSms)];
     }
     
     return arry.count > 0 ? (arry.count == codes.count ? codes : arry) : nil;
@@ -121,7 +135,8 @@
     if (nil != _uiDelegate && [_uiDelegate respondsToSelector:@selector(didSelectPlatformItem:message:)]) {
         [_uiDelegate didSelectPlatformItem:platform message:_message];
     }
-
+    _platform = platform.code;
+    
     switch (platform.code) {
         case kOSPlatformQQ: {
             [OpenShare shareToQQ:_message];
@@ -152,10 +167,11 @@
             break;
         }
         case kOSPlatformCopyUrl : {
-            NSParameterAssert(nil != _message.dataItem.link);
-            if (nil != _message.dataItem.link) {
-                [UIPasteboard generalPasteboard].string = _message.dataItem.link.absoluteString;
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"copyurl.success", nil)];
+            NSParameterAssert(nil != _message.dataItem.copyableContent);
+            if (nil != _message.dataItem.copyableContent) {
+                [UIPasteboard generalPasteboard].string = _message.dataItem.copyableContent;
+                _platform = kOSPlatformCopyUrl;
+                [self callShareCompletionHandle:kOSStateSuccess error:nil];
             }
             
             break;
@@ -223,8 +239,10 @@
 
 - (void)downloadImage
 {
-    if (nil != _message.dataItem.imageUrl) {
-        NSString *path = [[self.class defaultCacheDirectoryInDomain:@"SDYImageCache"] stringByAppendingPathComponent:_message.dataItem.imageUrl.absoluteString.MD5_16];
+    // thumbnailurl 和 imageurl 理论上是不共存的。如果都设置了的话，imageUrl 优先
+    NSURL *url = nil != _message.dataItem.imageUrl ? _message.dataItem.imageUrl : _message.dataItem.thumbnailUrl;
+    if (nil != url) {
+        NSString *path = [[self.class defaultCacheDirectoryInDomain:@"OSImageCache"] stringByAppendingPathComponent:url.absoluteString.MD5_16];
         TCHTTPCachePolicy *policy = [[TCHTTPCachePolicy alloc] init];
         policy.cacheTimeoutInterval = kTCHTTPRequestCacheNeverExpired;
         policy.shouldExpiredCacheValid = NO;
@@ -234,7 +252,7 @@
         streamPolicy.downloadDestinationPath = path;
         
         __weak typeof(_message) wMessage = _message;
-        id<TCHTTPRequest> request = [[TCHTTPRequestCenter defaultCenter] requestForDownload:_message.dataItem.imageUrl.absoluteString
+        id<TCHTTPRequest> request = [[TCHTTPRequestCenter defaultCenter] requestForDownload:url.absoluteString
                                                                                streamPolicy:streamPolicy
                                                                                 cachePolicy:policy];
         if (nil != request) {
@@ -247,18 +265,32 @@
                 if (nil == wSelf) {
                     return;
                 }
+
+                NSData *data = nil;
+                if (success) {
+                    data = [NSData dataWithContentsOfFile:(NSString *)request.responseObject];
+                    if (nil == wMessage.dataItem.imageUrl) {
+                        @autoreleasepool {
+                            UIImage *image = [UIImage imageWithData:data];
+                            data = [image dataWithMaxCompressSizeBytes:50 * 1024];
+                        }
+                    }
+                }
                 
                 if (nil != wSelf.uiDelegate && [wSelf.uiDelegate respondsToSelector:@selector(didDownloadImage)]) {
                     [wSelf.uiDelegate didDownloadImage];
                 }
                 
-                NSData *data = nil;
-                if (success) {
-                    data = [NSData dataWithContentsOfFile:(NSString *)request.responseObject];
-                }
-                
                 if (nil != wMessage && wMessage == wSelf.message) {
-                    wMessage.dataItem.imageData = data;
+                    
+                    if (nil != data) {
+                        if (nil != wMessage.dataItem.imageUrl) {
+                            wMessage.dataItem.imageData = data;
+                        } else {
+                            wMessage.dataItem.thumbnailData = data;
+                        }
+                    }
+                    
                     [wSelf showPlatformController];
                 }
             };
@@ -285,7 +317,7 @@
                                     code:result
                                 userInfo:nil];
     }
-
+    _platform = kOSPlatformSms;
     [self callShareCompletionHandle:nil == error ? kOSStateSuccess : kOSStateFail error:error];
 }
 
@@ -295,13 +327,17 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
+    _platform = kOSPlatformEmail;
     [self callShareCompletionHandle:nil == error ? kOSStateSuccess : kOSStateFail error:error];
 }
+
+
+#pragma mark -
 
 - (void)callShareCompletionHandle:(OSShareState)state error:(NSError *)error
 {
     if (nil != _shareCompletionHandle) {
-        _shareCompletionHandle(_message, state, error);
+        _shareCompletionHandle(_platform, _message, state, error);
         _shareCompletionHandle = nil;
     }
 }

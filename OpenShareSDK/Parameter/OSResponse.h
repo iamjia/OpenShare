@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OpenShareConfig.h"
 
 @protocol OSResponse <NSObject>
 
+@required
 - (NSError *)error;
 
 @end

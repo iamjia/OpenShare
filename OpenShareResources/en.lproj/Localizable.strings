@@ -7,9 +7,9 @@
 */
 
 "os.platform.qq" = "QQ Friends";
-"os.platform.qzone" = "QQ Zone";
-"os.platform.wxsession" = "Wechat Session";
-"os.platform.wxtimeline" = "Wechat TimeLine";
+"os.platform.qzone" = "QZone";
+"os.platform.wxsession" = "Wechat Friends";
+"os.platform.wxtimeline" = "Wechat Moments";
 "os.platform.sina" = "Sina Weibo";
 "os.platform.email" = "Email";
 "os.platform.sms" = "SMS";

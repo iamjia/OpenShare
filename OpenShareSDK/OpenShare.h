@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, OSPasteboardEncoding){
 
 extern NSString *const kOSShareFinishedNotification;
 
-typedef void(^OSShareCompletionHandle)(OSMessage *message, OSShareState state, NSError *error);
+typedef void(^OSShareCompletionHandle)(OSPlatformCode platform, OSMessage *message, OSShareState state, NSError *error);
 
 @interface OpenShare : NSObject
 

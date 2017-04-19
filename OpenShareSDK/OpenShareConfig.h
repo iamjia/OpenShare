@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, OSPlatformCode) {
 };
 
 typedef NS_ENUM(NSInteger, OSShareState) {
+    kOSStateUnknown,
     kOSStateNotInstalled,
     kOSStateSuccess,
     kOSStateFail,
