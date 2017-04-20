@@ -1,6 +1,0 @@
-#!/bin/sh
-BUILD_BUNDLE_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.bundle
-TARGET_DIR=${SRCROOT}/build/${PRODUCT_NAME}.bundle
-
-rm -rf "$TARGET_DIR"
-cp -rf "$BUILD_BUNDLE_DIR" "$TARGET_DIR"
