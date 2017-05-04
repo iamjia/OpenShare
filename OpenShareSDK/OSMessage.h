@@ -84,6 +84,9 @@ typedef NS_ENUM(NSInteger, OSMultimediaType) {
 @property (nonatomic, copy) NSString *emailSubject;
 @property (nonatomic, copy) NSString *emailBody;
 
+@property (nonatomic, strong) NSData *attachment;
+@property (nonatomic, strong) NSString *attachmentFileName;
+
 // twitter
 @property (nonatomic, copy) NSString *twitterContent;
 

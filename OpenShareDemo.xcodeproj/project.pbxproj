@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		085CA4BD1EBB0472005B2235 /* NSData+MIMEType.m in Sources */ = {isa = PBXBuildFile; fileRef = 085CA4BC1EBB0472005B2235 /* NSData+MIMEType.m */; };
 		0879B3091D013D30006E1636 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0879B30B1D013D30006E1636 /* Localizable.strings */; };
 		088519EC1CFC2F2800F2F1B8 /* os_email_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 088519D51CFC2F2800F2F1B8 /* os_email_icon.png */; };
 		088519ED1CFC2F2800F2F1B8 /* os_email_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088519D61CFC2F2800F2F1B8 /* os_email_icon@2x.png */; };
@@ -183,6 +184,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		085CA4BB1EBB0472005B2235 /* NSData+MIMEType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MIMEType.h"; path = "../../../../Thor/PacketData/PacketParser/NSData+MIMEType.h"; sourceTree = "<group>"; };
+		085CA4BC1EBB0472005B2235 /* NSData+MIMEType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MIMEType.m"; path = "../../../../Thor/PacketData/PacketParser/NSData+MIMEType.m"; sourceTree = "<group>"; };
 		0879B30A1D013D30006E1636 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		088519D51CFC2F2800F2F1B8 /* os_email_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = os_email_icon.png; sourceTree = "<group>"; };
 		088519D61CFC2F2800F2F1B8 /* os_email_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "os_email_icon@2x.png"; sourceTree = "<group>"; };
@@ -552,6 +555,8 @@
 				088CABED1CFBDD75000CEFCD /* ViewController.m */,
 				08EA8D951E6E873E00508506 /* UIImage+SDYHelper.h */,
 				08EA8D961E6E873E00508506 /* UIImage+SDYHelper.m */,
+				085CA4BB1EBB0472005B2235 /* NSData+MIMEType.h */,
+				085CA4BC1EBB0472005B2235 /* NSData+MIMEType.m */,
 				088CABF21CFBDD75000CEFCD /* Assets.xcassets */,
 				088CABF71CFBDD75000CEFCD /* Info.plist */,
 				088CAD501CFBDEAE000CEFCD /* OpenShareDemo-Prefix.pch */,
@@ -1055,7 +1060,8 @@
 					};
 					088CABE21CFBDD75000CEFCD = {
 						CreatedOnToolsVersion = 7.3.1;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = UZ37QVJJMQ;
+						ProvisioningStyle = Automatic;
 					};
 					088CAC121CFBDD94000CEFCD = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1176,6 +1182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				085CA4BD1EBB0472005B2235 /* NSData+MIMEType.m in Sources */,
 				08EA8D6B1E6E86CB00508506 /* TCHTTPStreamPolicy.m in Sources */,
 				08EA8D751E6E86CB00508506 /* TCHTTPRequestHelper.m in Sources */,
 				08EA8D651E6E86CB00508506 /* AFURLRequestSerialization.m in Sources */,
@@ -1413,7 +1420,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = UZ37QVJJMQ;
 				GCC_PREFIX_HEADER = "OpenShareDemo/OpenShareDemo-Prefix.pch";
 				INFOPLIST_FILE = OpenShareDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1424,6 +1431,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Jia.OpenShareDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1432,7 +1440,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = UZ37QVJJMQ;
 				GCC_PREFIX_HEADER = "OpenShareDemo/OpenShareDemo-Prefix.pch";
 				INFOPLIST_FILE = OpenShareDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1443,6 +1451,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Jia.OpenShareDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -1528,7 +1537,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = UZ37QVJJMQ;
 				GCC_PREFIX_HEADER = "OpenShareDemo/OpenShareDemo-Prefix.pch";
 				INFOPLIST_FILE = OpenShareDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1539,6 +1548,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Jia.OpenShareDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Publish;
 		};

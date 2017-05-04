@@ -9,6 +9,7 @@
 #import "OpenShare+Mail.h"
 #import "OpenShare+Helper.h"
 #import "UIWindow+TCHelper.h"
+#import "NSData+MIMEType.h"
 
 @implementation OpenShare (Mail)
 
@@ -24,13 +25,27 @@
         mailComposeCtrler.subject = msg.dataItem.emailSubject;
         [mailComposeCtrler setMessageBody:msg.dataItem.emailBody isHTML:YES];
         
-        if (OSMultimediaTypeImage == msg.multimediaType && nil != msg.dataItem.imageData) {
-            NSString *imageType = [OpenShare contentTypeForImageData:msg.dataItem.imageData];
-            NSRange range = [imageType rangeOfString:@"image/"];
-            if (range.location != NSNotFound) {
-                NSString *fileName = [NSString stringWithFormat:@"image.%@", [imageType substringFromIndex:range.location + range.length]];
-                [mailComposeCtrler addAttachmentData:msg.dataItem.imageData mimeType:imageType fileName:fileName];
+        if (OSMultimediaTypeImage == msg.multimediaType) {
+            if (nil == msg.dataItem.attachment) {
+                msg.dataItem.attachment = msg.dataItem.imageData;
             }
+        }
+        
+        if (nil != msg.dataItem.attachment) {
+            
+            NSString *mimeType = msg.dataItem.attachment.MIMEType;
+            NSString *fileName = msg.dataItem.attachmentFileName;
+            if (fileName.length < 1) {
+                
+                fileName = @"file";
+                
+                NSString *suffix = [mimeType componentsSeparatedByString:@"/"].lastObject;
+                if (suffix.length > 0) {
+                    fileName = [fileName stringByAppendingFormat:@".%@", suffix];
+                }
+            }
+            
+            [mailComposeCtrler addAttachmentData:msg.dataItem.attachment mimeType:mimeType fileName:fileName];
         }
         
         [[UIApplication sharedApplication].delegate.window.topMostViewController presentViewController:mailComposeCtrler animated:YES completion:nil];

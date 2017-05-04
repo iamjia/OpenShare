@@ -9,6 +9,7 @@
 #import "OpenShare+Sms.h"
 #import "OpenShare+Helper.h"
 #import "UIWindow+TCHelper.h"
+#import "NSData+MIMEType.h"
 
 @implementation OpenShare (Sms)
 
@@ -21,15 +22,30 @@
         controller.recipients = msg.dataItem.recipients;
         controller.body = msg.dataItem.msgBody;
         controller.messageComposeDelegate = delegate;
-        if (OSMultimediaTypeImage == msg.multimediaType && nil != msg.dataItem.imageData) {
-            NSString *imageType = [OpenShare contentTypeForImageData:msg.dataItem.imageData];
-            NSRange range = [imageType rangeOfString:@"image/"];
-            if (range.location != NSNotFound) {
-                NSString *fileName = [NSString stringWithFormat:@"image.%@", [imageType substringFromIndex:range.location + range.length]];
-                [controller addAttachmentData:msg.dataItem.imageData
-                               typeIdentifier:@"OSSMSImage"
-                                     filename:fileName];
+        
+        if (OSMultimediaTypeImage == msg.multimediaType) {
+            if (nil == msg.dataItem.attachment) {
+                msg.dataItem.attachment = msg.dataItem.imageData;
             }
+        }
+        
+        if (nil != msg.dataItem.attachment) {
+            
+            NSString *mimeType = msg.dataItem.attachment.MIMEType;
+            NSString *fileName = msg.dataItem.attachmentFileName;
+            if (fileName.length < 1) {
+                
+                fileName = @"file";
+                
+                NSString *suffix = [mimeType componentsSeparatedByString:@"/"].lastObject;
+                if (suffix.length > 0) {
+                    fileName = [fileName stringByAppendingFormat:@".%@", suffix];
+                }
+            }
+            
+            [controller addAttachmentData:msg.dataItem.attachment
+                           typeIdentifier:mimeType
+                                 filename:fileName];
         }
         
         [[UIApplication sharedApplication].delegate.window.topMostViewController presentViewController:controller animated:YES completion:nil];

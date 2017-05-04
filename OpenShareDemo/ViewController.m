@@ -56,9 +56,9 @@
 
 - (void)share
 {
-    [[OpenShareManager defaultManager] shareMsg:_message platformCodes:@[@(kOSPlatformTwitter), @(kOSPlatformFacebook), @(kOSPlatformQQ)] completion:^(OSMessage *message, OSShareState state, NSError *error) {
-        
-    }];
+//    [[OpenShareManager defaultManager] shareMsg:_message platformCodes:@[@(kOSPlatformTwitter), @(kOSPlatformFacebook), @(kOSPlatformQQ)] completion:^(OSMessage *message, OSShareState state, NSError *error) {
+//        
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {
