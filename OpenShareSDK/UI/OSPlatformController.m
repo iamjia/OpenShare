@@ -29,6 +29,9 @@ static CGFloat const kAnimDuration = 0.2f;
     UIView *_containerView;
     UIView *_grayTouchView;
     UIButton *_cancelBtn;
+    
+    UIImage *_screenShot;
+    UIImageView *_previewImageView;
 }
 
 - (NSBundle *)openShareBundle
@@ -77,6 +80,21 @@ static CGFloat const kAnimDuration = 0.2f;
     return _platformConfig;
 }
 
+- (UIImageView *)previewImageView
+{
+    if (nil == _previewImageView) {
+        _previewImageView = [[UIImageView alloc] init];
+        _previewImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _previewImageView.image = _screenShot;
+    }
+    return _previewImageView;
+}
+
+- (CGFloat)containerViewViewHeight
+{
+    return _containerView.frame.size.height;
+}
+
 - (instancetype)initWithPlatformCodes:(NSArray<NSNumber/*OSPlatformCode*/ *> *)codes
 {
     if (self = [super init]) {
@@ -96,6 +114,13 @@ static CGFloat const kAnimDuration = 0.2f;
     return self;
 }
 
+- (instancetype)initWithPlatformCodes:(NSArray<NSNumber *> *)codes screenShot:(UIImage *)screenShot
+{
+    _screenShot = screenShot;
+    
+    return [self initWithPlatformCodes:codes];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -108,7 +133,7 @@ static CGFloat const kAnimDuration = 0.2f;
     UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDismiss)];
     [_grayTouchView addGestureRecognizer:tapGes];
     [self.view addSubview:_grayTouchView];
-
+    
     CGFloat spacing = 2.0f;
     CGFloat itemWidth = [UIScreen mainScreen].bounds.size.width > 320.0f ? 90.0f : 77.0f;
     CGFloat cancelBtnHeight = 49.0f;
@@ -124,7 +149,12 @@ static CGFloat const kAnimDuration = 0.2f;
     
     _containerView = [[UIView alloc] initWithFrame:rect];
     [self.view addSubview:_containerView];
-
+    
+    if (nil != _screenShot) {
+        self.previewImageView.frame = CGRectMake(0.0f, 10.0f, self.view.bounds.size.width, rect.origin.y - 15.0f);
+        [_grayTouchView addSubview:_previewImageView];
+    }
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     layout.minimumLineSpacing = spacing;

@@ -16,6 +16,7 @@
 @property (nonatomic, weak) id<OSPlatformControllerDelegate> delegate;
 
 - (instancetype)initWithPlatformCodes:(NSArray<NSNumber/*OSPlatformCode*/ *> *)codes;
+- (instancetype)initWithPlatformCodes:(NSArray<NSNumber/*OSPlatformCode*/ *> *)codes screenShot:(UIImage *)screenShot;
 
 @end
 

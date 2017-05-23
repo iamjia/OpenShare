@@ -22,6 +22,7 @@
 + (NSArray<NSNumber/*OSPlatformCode*/ *> *)validPlatformCodes:(NSArray<NSNumber/*OSPlatformCode*/ *> *)codes;
 
 - (BOOL)shareMsg:(OSMessage *)msg platformCodes:(NSArray<NSNumber/*OSPlatformCode*/ *> *)codes completion:(OSShareCompletionHandle)completion;
+- (BOOL)shareScreenShotMsg:(OSMessage *)msg platformCodes:(NSArray<NSNumber/*OSPlatformCode*/ *> *)codes completion:(OSShareCompletionHandle)completion;
 
 @end
 

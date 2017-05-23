@@ -81,6 +81,24 @@
     return YES;
 }
 
+- (BOOL)shareScreenShotMsg:(OSMessage *)msg platformCodes:(NSArray<NSNumber/*OSPlatformCode*/ *> *)codes completion:(OSShareCompletionHandle)completion
+{
+    NSArray *validCodes = [self.class validPlatformCodes:codes];
+    if (validCodes.count < 1) {
+        return NO;
+    }
+    
+    _message = msg;
+    _shareCompletionHandle = completion;
+    _platformCtrler = [[OSPlatformController alloc] initWithPlatformCodes:validCodes screenShot:[UIImage imageWithData:msg.dataItem.imageData]];
+    _platformCtrler.delegate = self;
+    _platformCtrler.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    [self showPlatformController];
+    
+    return YES;
+}
+
 + (NSArray<NSNumber/*OSPlatformCode*/ *> *)validPlatformCodes:(NSArray<NSNumber/*OSPlatformCode*/ *> *)codes
 {
     if (codes.count < 1) {
