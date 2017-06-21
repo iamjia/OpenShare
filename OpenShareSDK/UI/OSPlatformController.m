@@ -8,6 +8,7 @@
 
 #import "OSPlatformController.h"
 #import "OpenShare.h"
+#import "ScreenCaptureManager.h"
 
 static NSString *const kCellIdentifier = @"UICollectionViewCell";
 static NSInteger const kContentBtnTag = 1024;
@@ -75,7 +76,9 @@ static CGFloat const kAnimDuration = 0.2f;
                             @(kOSPlatformFacebook): @{@"name": @"os.platform.facebook",
                                                      @"image": @"os_fb_icon"},
                             @(kOSPlatformTwitter): @{@"name": @"os.platform.twitter",
-                                                     @"image": @"os_tw_icon"}};
+                                                     @"image": @"os_tw_icon"},
+                            @(kOSPlatformSystem): @{@"name": @"os.platform.system",
+                                                     @"image": @"os_sys_icon"},};
     }
     return _platformConfig;
 }
@@ -188,10 +191,22 @@ static CGFloat const kAnimDuration = 0.2f;
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    ScreenCaptureManager.manger.ignoreNotification = YES;
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self show];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    ScreenCaptureManager.manger.ignoreNotification = NO;
 }
 
 

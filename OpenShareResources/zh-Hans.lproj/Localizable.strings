@@ -16,5 +16,6 @@
 "os.platform.copyurl" = "复制";
 "os.platform.facebook" = "Facebook";
 "os.platform.twitter" = "Twitter";
+"os.platform.system" = "其他";
 "copyurl.success" = "复制成功";
 "public.button.cancel" = "取消";

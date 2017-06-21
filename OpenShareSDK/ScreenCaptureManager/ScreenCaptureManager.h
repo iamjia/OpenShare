@@ -10,6 +10,10 @@
 
 @interface ScreenCaptureManager : NSObject
 
+@property (nonatomic, assign) BOOL ignoreNotification;
+
++ (instancetype)manger;
+
 - (void)listenUserDidTakeScreenshotNotificationCompletion:(void(^)(NSData *screenshot))completion;
 - (void)cancelListen;
 

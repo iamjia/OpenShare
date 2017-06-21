@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, OSPlatformCode) {
     kOSPlatformCopyUrl = 1 << 7,
     kOSPlatformFacebook = 1 << 8,
     kOSPlatformTwitter = 1 << 9,
+    kOSPlatformSystem = 1 << 10,
 };
 
 typedef NS_ENUM(NSInteger, OSShareState) {

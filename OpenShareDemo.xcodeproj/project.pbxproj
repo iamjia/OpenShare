@@ -56,6 +56,8 @@
 		08D7A6261D9CC35500F8457B /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D7A6221D9CC35500F8457B /* SVIndefiniteAnimatedView.m */; };
 		08D7A6271D9CC35500F8457B /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D7A6231D9CC35500F8457B /* SVProgressHUD.bundle */; };
 		08D7A6281D9CC35500F8457B /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D7A6251D9CC35500F8457B /* SVProgressHUD.m */; };
+		08E4FA1A1EFA63C3001BE15E /* os_sys_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E4FA181EFA63C3001BE15E /* os_sys_icon@2x.png */; };
+		08E4FA1B1EFA63C3001BE15E /* os_sys_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E4FA191EFA63C3001BE15E /* os_sys_icon@3x.png */; };
 		08EA8C701E6D615300508506 /* OpenShare+Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8C6B1E6D615300508506 /* OpenShare+Facebook.m */; };
 		08EA8C711E6D615300508506 /* OpenShare+Twitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8C6D1E6D615300508506 /* OpenShare+Twitter.m */; };
 		08EA8C751E6DA29600508506 /* OpenShareFacebookParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA8C741E6DA29600508506 /* OpenShareFacebookParam.m */; };
@@ -261,6 +263,8 @@
 		08D7A6231D9CC35500F8457B /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		08D7A6241D9CC35500F8457B /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		08D7A6251D9CC35500F8457B /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		08E4FA181EFA63C3001BE15E /* os_sys_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "os_sys_icon@2x.png"; sourceTree = "<group>"; };
+		08E4FA191EFA63C3001BE15E /* os_sys_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "os_sys_icon@3x.png"; sourceTree = "<group>"; };
 		08EA8C6A1E6D615300508506 /* OpenShare+Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Facebook.h"; sourceTree = "<group>"; };
 		08EA8C6B1E6D615300508506 /* OpenShare+Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+Facebook.m"; sourceTree = "<group>"; };
 		08EA8C6C1E6D615300508506 /* OpenShare+Twitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Twitter.h"; sourceTree = "<group>"; };
@@ -583,6 +587,8 @@
 				088CAC151CFBDD94000CEFCD /* Info.plist */,
 				08EA8C761E6DA6A300508506 /* os_fb_icon@2x.png */,
 				08EA8C771E6DA6A300508506 /* os_fb_icon@3x.png */,
+				08E4FA181EFA63C3001BE15E /* os_sys_icon@2x.png */,
+				08E4FA191EFA63C3001BE15E /* os_sys_icon@3x.png */,
 				08EA8C781E6DA6A300508506 /* os_tw_icon@2x.png */,
 				08EA8C791E6DA6A300508506 /* os_tw_icon@3x.png */,
 				088519D51CFC2F2800F2F1B8 /* os_email_icon.png */,
@@ -1121,6 +1127,7 @@
 				088519FE1CFC2F2800F2F1B8 /* os_wechat_timeline_icon@2x.png in Resources */,
 				08D7A60B1D9CBC5400F8457B /* os_copy_url.png in Resources */,
 				088519F81CFC2F2800F2F1B8 /* os_sms_icon@2x.png in Resources */,
+				08E4FA1B1EFA63C3001BE15E /* os_sys_icon@3x.png in Resources */,
 				08D7A60D1D9CBC5400F8457B /* os_copy_url@3x.png in Resources */,
 				088519F71CFC2F2800F2F1B8 /* os_sms_icon.png in Resources */,
 				08EA8C7B1E6DA6A300508506 /* os_fb_icon@3x.png in Resources */,
@@ -1137,6 +1144,7 @@
 				088519FC1CFC2F2800F2F1B8 /* os_wechat_icon@3x.png in Resources */,
 				088519EE1CFC2F2800F2F1B8 /* os_email_icon@3x.png in Resources */,
 				088519F51CFC2F2800F2F1B8 /* os_sina_icon@2x.png in Resources */,
+				08E4FA1A1EFA63C3001BE15E /* os_sys_icon@2x.png in Resources */,
 				088519EC1CFC2F2800F2F1B8 /* os_email_icon.png in Resources */,
 				088519F41CFC2F2800F2F1B8 /* os_sina_icon.png in Resources */,
 				088519FD1CFC2F2800F2F1B8 /* os_wechat_timeline_icon.png in Resources */,

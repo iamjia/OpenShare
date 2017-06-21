@@ -20,11 +20,21 @@
     [[NSNotificationCenter defaultCenter] removeObserver:_screenshotObserver];
 }
 
++ (instancetype)manger
+{
+    static ScreenCaptureManager *s_mgr = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        s_mgr = [[ScreenCaptureManager alloc] init];
+    });
+    return s_mgr;
+}
+
 - (void)listenUserDidTakeScreenshotNotificationCompletion:(void(^)(NSData *screenshot))completion
 {
     __weak typeof(self) wSelf = self;
     _screenshotObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationUserDidTakeScreenshotNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-        if (nil != completion) {
+        if (!wSelf.ignoreNotification && nil != completion) {
             completion(wSelf.screenShot);
         }
     }];
