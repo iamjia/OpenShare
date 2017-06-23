@@ -12,7 +12,7 @@
 
 static NSString *const kCellIdentifier = @"UICollectionViewCell";
 static NSInteger const kContentBtnTag = 1024;
-static CGFloat const kAnimDuration = 0.2f;
+static CGFloat const kAnimDuration = 0.35f;
 
 @interface OSPlatformController () <UICollectionViewDataSource, UICollectionViewDelegate
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
@@ -33,6 +33,7 @@ static CGFloat const kAnimDuration = 0.2f;
     
     UIImage *_screenShot;
     UIImageView *_previewImageView;
+    UIImageView *_blurBackgroundImgView;
 }
 
 - (NSBundle *)openShareBundle
@@ -74,11 +75,11 @@ static CGFloat const kAnimDuration = 0.2f;
                             @(kOSPlatformCopyUrl): @{@"name": @"os.platform.copyurl",
                                                      @"image": @"os_copy_url"},
                             @(kOSPlatformFacebook): @{@"name": @"os.platform.facebook",
-                                                     @"image": @"os_fb_icon"},
+                                                      @"image": @"os_fb_icon"},
                             @(kOSPlatformTwitter): @{@"name": @"os.platform.twitter",
                                                      @"image": @"os_tw_icon"},
                             @(kOSPlatformSystem): @{@"name": @"os.platform.system",
-                                                     @"image": @"os_sys_icon"},};
+                                                    @"image": @"os_sys_icon"},};
     }
     return _platformConfig;
 }
@@ -156,6 +157,11 @@ static CGFloat const kAnimDuration = 0.2f;
     if (nil != _screenShot) {
         self.previewImageView.frame = CGRectMake(0.0f, 10.0f, self.view.bounds.size.width, rect.origin.y - 15.0f);
         [_grayTouchView addSubview:_previewImageView];
+        
+        _blurBackgroundImgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        [_grayTouchView insertSubview:_blurBackgroundImgView atIndex:0];
+        _blurBackgroundImgView.image = _screenShot.blurImage;
+        
     }
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -181,7 +187,7 @@ static CGFloat const kAnimDuration = 0.2f;
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _cancelBtn.backgroundColor = [UIColor whiteColor];
     [_cancelBtn setTitleColor:RGBHex(0x333333) forState:UIControlStateNormal];
-
+    
     NSString *cancelTitle = NSLocalizedStringFromTableInBundle(@"public.button.cancel", nil, self.openShareBundle, nil);
     [_cancelBtn setTitle:cancelTitle forState:UIControlStateNormal];
     _cancelBtn.frame = CGRectMake(0.0f, CGRectGetMaxY(separatorLine.frame), self.view.bounds.size.width, cancelBtnHeight);
@@ -195,6 +201,9 @@ static CGFloat const kAnimDuration = 0.2f;
 {
     [super viewWillAppear:animated];
     ScreenCaptureManager.manger.ignoreNotification = YES;
+    if (nil != _screenShot) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -207,6 +216,10 @@ static CGFloat const kAnimDuration = 0.2f;
 {
     [super viewWillDisappear:animated];
     ScreenCaptureManager.manger.ignoreNotification = NO;
+    
+    if (nil != _screenShot) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:animated];
+    }
 }
 
 
@@ -220,7 +233,7 @@ static CGFloat const kAnimDuration = 0.2f;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
-
+    
     UIButton *contentBtn = [cell.contentView viewWithTag:kContentBtnTag];
     if (nil == contentBtn) {
         contentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -248,12 +261,18 @@ static CGFloat const kAnimDuration = 0.2f;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    __weak typeof(self) wSelf = self;
-    [self dismiss:^{
-        if (nil != wSelf.delegate && [wSelf.delegate respondsToSelector:@selector(OSPlatformController:didSelectPlatformItem:)]) {
-            [wSelf.delegate OSPlatformController:wSelf didSelectPlatformItem:wSelf.platforms[indexPath.item]];
+    if (nil != _screenShot) {
+        if (nil != self.delegate && [self.delegate respondsToSelector:@selector(OSPlatformController:didSelectPlatformItem:)]) {
+            [self.delegate OSPlatformController:self didSelectPlatformItem:self.platforms[indexPath.item]];
         }
-    }];
+    } else {
+        __weak typeof(self) wSelf = self;
+        [self dismiss:^{
+            if (nil != wSelf.delegate && [wSelf.delegate respondsToSelector:@selector(OSPlatformController:didSelectPlatformItem:)]) {
+                [wSelf.delegate OSPlatformController:wSelf didSelectPlatformItem:wSelf.platforms[indexPath.item]];
+            }
+        }];
+    }
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -288,6 +307,15 @@ static CGFloat const kAnimDuration = 0.2f;
     hiddenAnim.removedOnCompletion = YES;
     [_grayTouchView.layer addAnimation:hiddenAnim forKey:nil];
     _grayTouchView.hidden = NO;
+    
+    CABasicAnimation *scaleAnim = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    scaleAnim.fromValue = @(0.2f);
+    scaleAnim.toValue = @(1.0f);
+    scaleAnim.duration = kAnimDuration;
+    scaleAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    scaleAnim.removedOnCompletion = NO;
+    scaleAnim.fillMode = kCAFillModeForwards;
+    [_previewImageView.layer addAnimation:scaleAnim forKey:nil];
 }
 
 - (void)dismiss:(void(^)(void))completion

@@ -148,7 +148,7 @@
 
 - (void)OSPlatformController:(OSPlatformController *)ctrler didSelectPlatformItem:(OSPlatformItem *)platform
 {
-    [self dismissPlatformController];
+//    [self dismissPlatformController];
     
     if (nil != _uiDelegate && [_uiDelegate respondsToSelector:@selector(didSelectPlatformItem:message:)]) {
         [_uiDelegate didSelectPlatformItem:platform message:_message];
@@ -354,6 +354,9 @@
 
 - (void)callShareCompletionHandle:(OSShareState)state error:(NSError *)error
 {
+    // 消失
+    [self dismissPlatformController];
+    
     if (nil != _shareCompletionHandle) {
         _shareCompletionHandle(_platform, _message, state, error);
         _shareCompletionHandle = nil;

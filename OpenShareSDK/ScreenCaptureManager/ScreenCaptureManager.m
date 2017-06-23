@@ -8,6 +8,7 @@
 
 #import "ScreenCaptureManager.h"
 #import "OpenShareManager.h"
+#import "UIView+StatusBar.h"
 
 @implementation ScreenCaptureManager
 {
@@ -78,14 +79,112 @@
         } else {
             [window.layer renderInContext:context];
         }
-        
         CGContextRestoreGState(context);
+        
+        
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        NSUInteger currentWindowIndex = [windows indexOfObject:window];
+        if (windows.count > currentWindowIndex + 1)
+        {
+            UIWindow *nextWindow = [windows objectAtIndex:currentWindowIndex + 1];
+            if (nextWindow.windowLevel > UIWindowLevelStatusBar) {
+            [self mergeStatusBarToContext:context rect:CGRectMake(0.0f, 0.0f, imageSize.width, imageSize.height) screenshotOrientation:orientation];
+            }
+        }
+        else
+        {
+            [self mergeStatusBarToContext:context rect:CGRectMake(0.0f, 0.0f, imageSize.width, imageSize.height)  screenshotOrientation:orientation];
+        }
+        
+        
     }
     
+
+
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     return UIImagePNGRepresentation(image);
 }
+
+- (void)mergeStatusBarToContext:(CGContextRef)context
+                           rect:(CGRect)rect
+          screenshotOrientation:(UIInterfaceOrientation)o
+{
+    UIView *statusBarView = UIView.statusBar;
+    UIInterfaceOrientation statusBarOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    CGAffineTransform preTransform = CGAffineTransformIdentity;
+    if (o == statusBarOrientation)
+    {
+        preTransform = CGAffineTransformTranslate(preTransform, -rect.origin.x, -rect.origin.y);
+    }
+    //Handle status bar orientation in portrait and portrait upside down screen shot
+    else if((o == UIInterfaceOrientationPortrait && statusBarOrientation == UIInterfaceOrientationLandscapeLeft) ||
+            (o == UIInterfaceOrientationPortraitUpsideDown && statusBarOrientation == UIInterfaceOrientationLandscapeRight))
+    {
+        preTransform = CGAffineTransformTranslate(preTransform, 0, rect.size.height);
+        preTransform = CGAffineTransformRotate(preTransform, - M_PI_2);
+        preTransform = CGAffineTransformTranslate(preTransform, CGRectGetMaxY(rect) - screenHeight, -rect.origin.x);
+    }
+    else if((o == UIInterfaceOrientationPortrait && statusBarOrientation == UIInterfaceOrientationLandscapeRight) ||
+            (o == UIInterfaceOrientationPortraitUpsideDown && statusBarOrientation == UIInterfaceOrientationLandscapeLeft))
+    {
+        preTransform = CGAffineTransformTranslate(preTransform, 0, rect.size.height);
+        preTransform = CGAffineTransformRotate(preTransform, M_PI_2);
+        preTransform = CGAffineTransformTranslate(preTransform, -CGRectGetMaxY(rect), rect.origin.x - screenWidth);
+    }
+    else if((o == UIInterfaceOrientationPortrait && statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown) ||
+            (o == UIInterfaceOrientationPortraitUpsideDown && statusBarOrientation == UIInterfaceOrientationPortrait))
+    {
+        preTransform = CGAffineTransformTranslate(preTransform, 0, rect.size.height);
+        preTransform = CGAffineTransformRotate(preTransform, - M_PI);
+        preTransform = CGAffineTransformTranslate(preTransform, rect.origin.x - screenWidth, CGRectGetMaxY(rect) - screenHeight);
+    }
+    //Handle status bar orientation in landscape left and landscape right screen shot
+    else if((o == UIInterfaceOrientationLandscapeLeft && statusBarOrientation == UIInterfaceOrientationPortrait) ||
+            (o == UIInterfaceOrientationLandscapeRight && statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown))
+    {
+        preTransform = CGAffineTransformTranslate(preTransform, 0, rect.size.height);
+        preTransform = CGAffineTransformRotate(preTransform, M_PI_2);
+        preTransform = CGAffineTransformTranslate(preTransform, -CGRectGetMaxY(rect), rect.origin.x - screenHeight);
+    }
+    else if((o == UIInterfaceOrientationLandscapeLeft && statusBarOrientation == UIInterfaceOrientationLandscapeRight) ||
+            (o == UIInterfaceOrientationLandscapeRight && statusBarOrientation == UIInterfaceOrientationLandscapeLeft))
+    {
+        preTransform = CGAffineTransformTranslate(preTransform, 0, rect.size.height);
+        preTransform = CGAffineTransformRotate(preTransform, M_PI);
+        preTransform = CGAffineTransformTranslate(preTransform, rect.origin.x - screenHeight, CGRectGetMaxY(rect) - screenWidth);
+    }
+    else if((o == UIInterfaceOrientationLandscapeLeft && statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown) ||
+            (o == UIInterfaceOrientationLandscapeRight && statusBarOrientation == UIInterfaceOrientationPortrait))
+    {
+        preTransform = CGAffineTransformTranslate(preTransform, 0, rect.size.height);
+        preTransform = CGAffineTransformRotate(preTransform, - M_PI_2);
+        preTransform = CGAffineTransformTranslate(preTransform, CGRectGetMaxY(rect) - screenWidth, -rect.origin.x);
+    }
+    
+    // -renderInContext: renders in the coordinate space of the layer,
+    // so we must first apply the layer's geometry to the graphics context
+    CGContextSaveGState(context);
+    // Apply pre transform
+    CGContextConcatCTM(context, preTransform);
+    // Center the context around the window's anchor point
+    CGContextTranslateCTM(context, [statusBarView center].x, [statusBarView center].y);
+    // Apply the view transform about the anchor point
+    CGContextConcatCTM(context, [statusBarView transform]);
+    // Offset by the portion of the bounds left of and above the anchor point
+    CGContextTranslateCTM(context,
+                          -[statusBarView bounds].size.width * [[statusBarView layer] anchorPoint].x,
+                          -[statusBarView bounds].size.height * [[statusBarView layer] anchorPoint].y);
+    
+    // Render the layer hierarchy to the current context
+    [[statusBarView layer] renderInContext:context];
+    
+    // Restore the context
+    CGContextRestoreGState(context);
+}
+
 
 @end
