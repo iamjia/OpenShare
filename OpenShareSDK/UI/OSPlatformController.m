@@ -152,16 +152,18 @@ static CGFloat const kAnimDuration = 0.35f;
     rect.origin.y = self.view.bounds.size.height - rect.size.height;
     
     _containerView = [[UIView alloc] initWithFrame:rect];
+    _containerView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:_containerView];
     
     if (nil != _screenShot) {
         self.previewImageView.frame = CGRectMake(0.0f, 10.0f, self.view.bounds.size.width, rect.origin.y - 15.0f);
+        _previewImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [_grayTouchView addSubview:_previewImageView];
         
         _blurBackgroundImgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        _blurBackgroundImgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [_grayTouchView insertSubview:_blurBackgroundImgView atIndex:0];
         _blurBackgroundImgView.image = _screenShot.blurImage;
-        
     }
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -177,11 +179,12 @@ static CGFloat const kAnimDuration = 0.35f;
     _collectionView.delegate = self;
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_collectionView registerClass:UICollectionViewCell.class forCellWithReuseIdentifier:kCellIdentifier];
-    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
     [_containerView addSubview:_collectionView];
     
     UIView *separatorLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(_collectionView.frame), self.view.bounds.size.width, separatorLineHeight)];
     separatorLine.backgroundColor = RGBHex(0xdcdcdc);
+    separatorLine.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
     [_containerView addSubview:separatorLine];
     
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -191,7 +194,7 @@ static CGFloat const kAnimDuration = 0.35f;
     NSString *cancelTitle = NSLocalizedStringFromTableInBundle(@"public.button.cancel", nil, self.openShareBundle, nil);
     [_cancelBtn setTitle:cancelTitle forState:UIControlStateNormal];
     _cancelBtn.frame = CGRectMake(0.0f, CGRectGetMaxY(separatorLine.frame), self.view.bounds.size.width, cancelBtnHeight);
-    _cancelBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _cancelBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
     [_cancelBtn addTarget:self action:@selector(tapDismiss) forControlEvents:UIControlEventTouchUpInside];
     [_containerView addSubview:_cancelBtn];
     
