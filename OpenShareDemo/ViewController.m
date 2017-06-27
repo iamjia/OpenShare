@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "OpenShareManager.h"
 #import "OpenShareHeader.h"
+#import "ScreenCaptureManager.h"
 
 @interface ViewController ()
 
@@ -52,6 +53,11 @@
     [invokeBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:invokeBtn];
 
+    self.view.backgroundColor = [UIColor cyanColor];
+    
+    [[ScreenCaptureManager manger] listenUserDidTakeScreenshotNotificationCompletion:^(NSData *screenshot) {
+        
+    }];
 }
 
 - (void)share

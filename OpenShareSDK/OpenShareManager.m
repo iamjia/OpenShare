@@ -216,6 +216,11 @@
 {
     UIViewController *viewController = [UIApplication sharedApplication].delegate.window.topMostViewController;
     
+    // alertController
+    if ([viewController isKindOfClass:[UIAlertController class]]) {
+        return;
+    }
+    
     UITabBarController *tabCtrler = viewController.tabBarController;
     if (nil != tabCtrler) {
         viewController = tabCtrler;
