@@ -215,11 +215,7 @@
 - (void)showPlatformController
 {
     UIViewController *viewController = [UIApplication sharedApplication].delegate.window.topMostViewController;
-    
-    // alertController
-    if ([viewController isKindOfClass:[UIAlertController class]]) {
-        return;
-    }
+    [viewController.view endEditing:YES];
     
     UITabBarController *tabCtrler = viewController.tabBarController;
     if (nil != tabCtrler) {
@@ -235,29 +231,29 @@
         rect.size.height = width;
     }
     
+    rect = [UIScreen mainScreen].bounds;
     _platformCtrler.view.frame = rect;
     
-    [viewController beginAppearanceTransition:NO animated:YES];
-    [viewController endAppearanceTransition];
-    [viewController addChildViewController:_platformCtrler];
-    [_platformCtrler beginAppearanceTransition:YES animated:YES];
-    [viewController.view addSubview:_platformCtrler.view];
-    [_platformCtrler didMoveToParentViewController:viewController];
-    [_platformCtrler endAppearanceTransition];
+    NSEnumerator *frontToBackWindows = [UIApplication.sharedApplication.windows reverseObjectEnumerator];
+    for (UIWindow *window in frontToBackWindows){
+        BOOL windowOnMainScreen = window.screen == UIScreen.mainScreen;
+        BOOL windowIsVisible = !window.hidden && window.alpha > 0;
+        BOOL windowLevelNormal = window.windowLevel == UIWindowLevelNormal;
+        
+        if (windowOnMainScreen && windowIsVisible && windowLevelNormal) {
+            [window addSubview:_platformCtrler.view];
+            break;
+        }
+    }
 }
 
 - (void)dismissPlatformController
 {
-    UIViewController *parentCtrler = _platformCtrler.parentViewController;
-    [_platformCtrler beginAppearanceTransition:NO animated:YES];
     [_platformCtrler.view removeFromSuperview];
-    [_platformCtrler endAppearanceTransition];
-    [_platformCtrler willMoveToParentViewController:nil];
-    [_platformCtrler removeFromParentViewController];
-    
-    [parentCtrler beginAppearanceTransition:YES animated:YES];
-    [parentCtrler endAppearanceTransition];
     _platformCtrler = nil;
+    
+    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.topMostViewController;
+    [viewController becomeFirstResponder];
 }
 
 - (void)downloadImage
